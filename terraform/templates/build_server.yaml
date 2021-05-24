@@ -1,0 +1,20 @@
+#cloud-config
+#Installs docker and runs ES, Logstash and Havoc.sh Grafana containers
+runcmd:
+  - sudo apt-get update
+  - sudo apt-get -y install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+  - sudo apt-get update
+  - sudo apt-get -y install docker-ce docker-ce-cli containerd.io
+  - sudo docker network create grafana-net
+  - sudo docker volume create elasticsearch-storage
+  - sudo docker volume create logstash-pipeline
+  - sudo echo "${logstash_config}" | base64 -d | gunzip > /var/lib/docker/volumes/logstash-pipeline/logstash.conf
+  - sudo docker run -d -p 9200:9200 -p 9300:9300 --restart always --name=elasticsearch -v elasticsearch-storage:/usr/share/elasticsearch/data -e "discovery.type=single-node" -e "ES_JAVA_OPTS=-Xms3g -Xmx3g" --network grafana-net docker.elastic.co/elasticsearch/elasticsearch:7.6.2
+  - sudo docker run -d --restart always --name logstash -v logstash-pipeline:/usr/share/logstash/pipeline -e "CAMPAIGN_ID=${campaign_id}" -e "REGION=${region}" --network grafana-net docker.elastic.co/logstash/logstash:7.6.2
+  - sudo docker cp /var/lib/docker/volumes/logstash-pipeline/logstash.conf logstash:/usr/share/logstash/pipeline/logstash.conf
+  - sleep 90
+  - sudo docker run -d -p 80:80 -p 443:443 --restart always --name=nginx-proxy -v /root/certs:/etc/nginx/certs:ro -v /etc/nginx/vhost.d -v /usr/share/nginx/html -v /var/run/docker.sock:/tmp/docker.sock:ro --label com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy=true --network grafana-net jwilder/nginx-proxy
+  - sudo docker run -d --name nginx-letsencrypt --volumes-from nginx-proxy -v /root/certs:/etc/nginx/certs:rw -v /var/run/docker.sock:/var/run/docker.sock:ro --network grafana-net jrcs/letsencrypt-nginx-proxy-companion
+  - sudo docker run -d --restart always --name=grafana -e "LETSENCRYPT_EMAIL=${letsencrypt_email}" -e "LETSENCRYPT_HOST=${letsencrypt_host}" -e "VIRTUAL_HOST=${letsencrypt_host}" -e "VIRTUAL_PORT=3000" -e "GF_SERVER_PROTOCOL=http" -e "GF_SERVER_ROOT_URL=https://${letsencrypt_host}" -e "GF_SERVER_ENABLE_GZIP=true" -e "GF_PATHS_PROVISIONING=/var/lib/grafana/provisioning" -e "GF_INSTALL_PLUGINS=grafana-worldmap-panel" -e "GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH=/var/lib/grafana/provisioning/dashboards/havoc-dashboard.json" --network grafana-net public.ecr.aws/g3r7h3t8/havoc_grafana:latest

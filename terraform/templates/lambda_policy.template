@@ -1,0 +1,79 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:PutItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:GetItem",
+                "dynamodb:Query",
+                "dynamodb:UpdateItem"
+            ],
+            "Resource": [
+                "${authorizer_table}",
+                "${portgroups_table}",
+                "${task_types_table}",
+                "${tasks_table}",
+                "${queue_table}"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:PutObject",
+                "s3:GetObject",
+                "s3:ListBucket",
+                "s3:DeleteObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::${workspace_bucket}",
+                "arn:aws:s3:::${workspace_bucket}/*",
+                "arn:aws:s3:::${logging_bucket}",
+                "arn:aws:s3:::${logging_bucket}/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ecs:RunTask",
+                "ecs:StopTask",
+                "ecs:DescribeTasks"
+            ],
+            "Resource": [
+                "arn:aws:ecs:*:478986894710:task-definition/nmap:*",
+                "arn:aws:ecs:*:478986894710:task-definition/metasploit:*",
+                "arn:aws:ecs:*:478986894710:task/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ecs:DeregisterTaskDefinition",
+                "ecs:RegisterTaskDefinition"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:RevokeSecurityGroupIngress",
+                "ec2:AuthorizeSecurityGroupIngress",
+                "ec2:CreateSecurityGroup",
+                "ec2:DeleteSecurityGroup"
+            ],
+            "Resource": [
+                "arn:aws:ec2:*:478986894710:vpc/${vpc_id}",
+                "arn:aws:ec2:*:478986894710:security-group/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DescribeNetworkInterfaces",
+                "ec2:DescribeSecurityGroups"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
