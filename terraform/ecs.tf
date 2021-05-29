@@ -21,7 +21,7 @@ resource "aws_ecs_task_definition" "nmap" {
   container_definitions = data.template_file.nmap_task_definition.rendered
   requires_compatibilities = ["FARGATE"]
   cpu                      = 512
-  memory                   = 512
+  memory                   = 1024
   tags                     = {
     campaign_id = "${var.campaign_prefix}-${var.campaign_name}"
     name        = "nmap"
@@ -44,8 +44,8 @@ resource "aws_ecs_task_definition" "metasploit" {
   network_mode          = "awsvpc"
   container_definitions = data.template_file.metasploit_task_definition.rendered
   requires_compatibilities = ["FARGATE"]
-  cpu                      = 512
-  memory                   = 512
+  cpu                      = 1024
+  memory                   = 4096
   tags                     = {
     campaign_id = "${var.campaign_prefix}-${var.campaign_name}"
     name        = "metasploit"
