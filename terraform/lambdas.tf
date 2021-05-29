@@ -14,7 +14,7 @@ resource "aws_lambda_function" "authorizer" {
   environment {
     variables = {
       CAMPAIGN_ID     = "${var.campaign_prefix}-${var.campaign_name}"
-      API_DOMAIN_NAME = ${var.campaign_prefix}-${var.campaign_name}-api.${var.domain_name}
+      API_DOMAIN_NAME = "${var.campaign_prefix}-${var.campaign_name}-api.${var.domain_name}"
     }
   }
 }
