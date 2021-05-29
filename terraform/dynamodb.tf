@@ -16,13 +16,13 @@ resource "aws_dynamodb_table_item" "campaign_admin" {
   item = <<ITEM
 {
   "api_key": {
-    "S": ${random_string.api_key.id}
+    "S": "${random_string.api_key.id}"
   },
   "secret_key": {
-    "S": ${random_string.secret.id}
+    "S": "${random_string.secret.id}"
   },
   "user_id": {
-    "S": ${var.campaign_admin_email}
+    "S": "${var.campaign_admin_email}"
   },
   "admin": {
     "S": "yes"
