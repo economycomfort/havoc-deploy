@@ -12,8 +12,8 @@ output "campaign_server_password" {
   value = "admin"
 }
 
-output "campaign_api_base_url" {
-  value = aws_api_gateway_deployment.rest_api.invoke_url
+output "campaign_api_domain_name" {
+  value = aws_api_gateway_domain_name.rest_api.regional_domain_name
 }
 
 output "campaign_admin_email" {
