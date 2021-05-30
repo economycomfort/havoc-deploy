@@ -24,16 +24,6 @@ resource "aws_api_gateway_stage" "primary_stage" {
   stage_name    = "havoc_sh"
 }
 
-resource "aws_api_gateway_method_settings" "all_methods" {
-  rest_api_id = aws_api_gateway_rest_api.rest_api.id
-  stage_name  = aws_api_gateway_stage.primary_stage.stage_name
-  method_path = "*/*"
-
-  settings {
-    logging_level = "INFO"
-  }
-}
-
 resource "aws_api_gateway_domain_name" "rest_api" {
   domain_name              = "${var.campaign_prefix}-${var.campaign_name}-api.${var.domain_name}"
   regional_certificate_arn = aws_acm_certificate_validation.api_gateway_cert.certificate_arn
