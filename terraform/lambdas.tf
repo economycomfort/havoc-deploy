@@ -1,10 +1,36 @@
 # lambdas.tf
 
+data "aws_s3_bucket_object" "authorizer_hash" {
+  bucket = "havoc-control-api"
+  key    = "authorizer.zip.base64sha256"
+}
+
+data "aws_s3_bucket_object" "manage_hash" {
+  bucket = "havoc-control-api"
+  key    = "manage.zip.base64sha256"
+}
+
+data "aws_s3_bucket_object" "remote_task_hash" {
+  bucket = "havoc-control-api"
+  key    = "remote_task.zip.base64sha256"
+}
+
+data "aws_s3_bucket_object" "task_control_hash" {
+  bucket = "havoc-control-api"
+  key    = "task_control.zip.base64sha256"
+}
+
+data "aws_s3_bucket_object" "task_result_hash" {
+  bucket = "havoc-control-api"
+  key    = "task_result.zip.base64sha256"
+}
+
 resource "aws_lambda_function" "authorizer" {
   function_name = "${var.campaign_prefix}-${var.campaign_name}-authorizer"
 
   s3_bucket = "havoc-control-api"
   s3_key    = "authorizer.zip"
+  source_code_hash = data.aws_s3_bucket_object.authorizer_hash.body
 
   handler = "lambda_function.lambda_handler"
   runtime = "python3.8"
@@ -24,6 +50,7 @@ resource "aws_lambda_function" "manage" {
 
   s3_bucket = "havoc-control-api"
   s3_key    = "manage.zip"
+  source_code_hash = data.aws_s3_bucket_object.manage_hash.body
 
   handler = "lambda_function.lambda_handler"
   runtime = "python3.8"
@@ -51,6 +78,7 @@ resource "aws_lambda_function" "remote_task" {
 
   s3_bucket = "havoc-control-api"
   s3_key    = "remote_task.zip"
+  source_code_hash = data.aws_s3_bucket_object.remote_task_hash.body
 
   handler = "lambda_function.lambda_handler"
   runtime = "python3.8"
@@ -78,6 +106,7 @@ resource "aws_lambda_function" "task_control" {
 
   s3_bucket = "havoc-control-api"
   s3_key    = "task_control.zip"
+  source_code_hash = data.aws_s3_bucket_object.task_control_hash.body
 
   handler = "lambda_function.lambda_handler"
   runtime = "python3.8"
@@ -106,6 +135,7 @@ resource "aws_lambda_function" "task_result" {
 
   s3_bucket = "havoc-control-api"
   s3_key    = "task_result.zip"
+  source_code_hash = data.aws_s3_bucket_object.task_result_hash.body
 
   handler = "lambda_function.lambda_handler"
   runtime = "python3.8"
