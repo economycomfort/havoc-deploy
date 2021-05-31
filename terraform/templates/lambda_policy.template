@@ -12,6 +12,7 @@
             ],
             "Resource": [
                 "${authorizer_table}",
+                "${authorizer_index}",
                 "${portgroups_table}",
                 "${task_types_table}",
                 "${tasks_table}",
