@@ -2,6 +2,7 @@
 
 resource "random_string" "api_key" {
   length = 12
+  special = false
 }
 
 resource "random_string" "secret" {
