@@ -16,6 +16,10 @@ output "campaign_api_domain_name" {
   value = "${var.campaign_prefix}-${var.campaign_name}-api.${var.domain_name}"
 }
 
+output "campaign_api_region" {
+  value = var.aws_region
+}
+
 output "campaign_admin_email" {
   value = var.campaign_admin_email
 }
@@ -26,4 +30,8 @@ output "campaign_admin_api_key" {
 
 output "campaign_admin_secret" {
   value = random_string.secret.id
+}
+
+output "authorizer_hash" {
+  value = data.aws_s3_bucket_object.authorizer_hash.body
 }

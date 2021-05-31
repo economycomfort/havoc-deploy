@@ -51,7 +51,7 @@ data "template_file" "lambda_policy" {
 
   vars = {
   authorizer_table    = aws_dynamodb_table.authorizer.arn,
-  authorizer_index    = "${aws_dynamodb_table.authorizer.arn}/index/ApiKeyIndex"
+  authorizer_index    = "${aws_dynamodb_table.authorizer.arn}/index/${var.campaign_prefix}-${var.campaign_name}-ApiKeyIndex"
   portgroups_table    = aws_dynamodb_table.portgroups.arn,
   task_types_table    = aws_dynamodb_table.task_types.arn,
   tasks_table         = aws_dynamodb_table.tasks.arn,
