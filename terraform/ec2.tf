@@ -33,13 +33,13 @@ data "template_file" "user_data" {
 }
 
 resource "aws_instance" "campaign_server" {
-  ami                  = data.aws_ami.ubuntu.id
-  instance_type        = "t3.large"
-  key_name             = var.keypair
-  subnet_id            = aws_subnet.campaign_subnet.id
-  security_groups      = [aws_security_group.campaign_server_group.id]
-  iam_instance_profile = aws_iam_instance_profile.campaign_server_profile.name
-  user_data            = data.template_file.user_data.rendered
+  ami                    = data.aws_ami.ubuntu.id
+  instance_type          = "t3.large"
+  key_name               = var.keypair
+  subnet_id              = aws_subnet.campaign_subnet.id
+  vpc_security_group_ids = [aws_security_group.campaign_server_group.id]
+  iam_instance_profile   = aws_iam_instance_profile.campaign_server_profile.name
+  user_data              = data.template_file.user_data.rendered
 
   tags = {
     Name = "${var.campaign_prefix}-${var.campaign_name}"
