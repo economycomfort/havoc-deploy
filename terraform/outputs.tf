@@ -31,7 +31,3 @@ output "campaign_admin_api_key" {
 output "campaign_admin_secret" {
   value = random_string.secret.id
 }
-
-output "authorizer_hash" {
-  value = data.aws_s3_bucket_object.authorizer_hash.body
-}
