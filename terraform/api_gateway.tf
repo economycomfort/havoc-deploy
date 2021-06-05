@@ -127,10 +127,10 @@ resource "aws_api_gateway_integration" "manage_lambda_integration" {
     "application/json" = <<EOF
 {
   "requestContext": {
-	  "authorizer": {
-		  "principalId": "$context.authorizer.principalId",
-		  "user_id": "$context.authorizer.user_id",
-	  }
+    "authorizer": {
+      "principalId": "$context.authorizer.principalId",
+      "user_id": "$context.authorizer.user_id",
+    }
   },
   "body": $input.body
 }
