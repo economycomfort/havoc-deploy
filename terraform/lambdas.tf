@@ -60,6 +60,7 @@ resource "aws_lambda_function" "manage" {
   environment {
     variables = {
       CAMPAIGN_ID = "${var.campaign_prefix}-${var.campaign_name}"
+      VPC_ID = aws_vpc.campaign_vpc.id
     }
   }
 }

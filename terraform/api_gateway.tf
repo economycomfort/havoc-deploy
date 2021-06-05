@@ -129,7 +129,7 @@ resource "aws_api_gateway_integration" "manage_lambda_integration" {
   "requestContext": {
     "authorizer": {
       "principalId": "$context.authorizer.principalId",
-      "user_id": "$context.authorizer.user_id",
+      "user_id": "$context.authorizer.user_id"
     }
   },
   "body": $input.body
@@ -152,7 +152,7 @@ resource "aws_api_gateway_integration" "remote_task_lambda_integration" {
   "requestContext": {
     "authorizer": {
       "principalId": "$context.authorizer.principalId",
-      "user_id": "$context.authorizer.user_id",
+      "user_id": "$context.authorizer.user_id"
     }
   },
   "body": $input.body
@@ -175,7 +175,7 @@ resource "aws_api_gateway_integration" "task_control_lambda_integration" {
   "requestContext": {
     "authorizer": {
       "principalId": "$context.authorizer.principalId",
-      "user_id": "$context.authorizer.user_id",
+      "user_id": "$context.authorizer.user_id"
     }
   },
   "body": $input.body
