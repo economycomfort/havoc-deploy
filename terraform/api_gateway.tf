@@ -124,7 +124,7 @@ resource "aws_api_gateway_integration" "manage_lambda_integration" {
   uri                     = aws_lambda_function.manage.invoke_arn
 
   request_templates = {
-    "application/xml" = <<EOF
+    "application/json" = <<EOF
 {
   "requestContext": {
 	  "authorizer": {
@@ -147,7 +147,7 @@ resource "aws_api_gateway_integration" "remote_task_lambda_integration" {
   uri                     = aws_lambda_function.remote_task.invoke_arn
 
   request_templates = {
-  "application/xml" = <<EOF
+  "application/json" = <<EOF
 {
   "requestContext": {
     "authorizer": {
@@ -170,7 +170,7 @@ resource "aws_api_gateway_integration" "task_control_lambda_integration" {
   uri                     = aws_lambda_function.task_control.invoke_arn
 
   request_templates = {
-  "application/xml" = <<EOF
+  "application/json" = <<EOF
 {
   "requestContext": {
     "authorizer": {
