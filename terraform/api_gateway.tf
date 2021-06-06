@@ -122,20 +122,6 @@ resource "aws_api_gateway_integration" "manage_lambda_integration" {
   integration_http_method = "POST"
   type                    = "AWS"
   uri                     = aws_lambda_function.manage.invoke_arn
-
-  request_templates = {
-    "application/json" = <<EOF
-{
-  "requestContext": {
-    "authorizer": {
-      "principalId": "$context.authorizer.principalId",
-      "user_id": "$context.authorizer.user_id"
-    }
-  },
-  "body": $input.body
-}
-EOF
-  }
 }
 
 resource "aws_api_gateway_integration" "remote_task_lambda_integration" {
@@ -145,20 +131,6 @@ resource "aws_api_gateway_integration" "remote_task_lambda_integration" {
   integration_http_method = "POST"
   type                    = "AWS"
   uri                     = aws_lambda_function.remote_task.invoke_arn
-
-  request_templates = {
-  "application/json" = <<EOF
-{
-  "requestContext": {
-    "authorizer": {
-      "principalId": "$context.authorizer.principalId",
-      "user_id": "$context.authorizer.user_id"
-    }
-  },
-  "body": $input.body
-}
-EOF
-  }
 }
 
 resource "aws_api_gateway_integration" "task_control_lambda_integration" {
@@ -168,18 +140,4 @@ resource "aws_api_gateway_integration" "task_control_lambda_integration" {
   integration_http_method = "POST"
   type                    = "AWS"
   uri                     = aws_lambda_function.task_control.invoke_arn
-
-  request_templates = {
-  "application/json" = <<EOF
-{
-  "requestContext": {
-    "authorizer": {
-      "principalId": "$context.authorizer.principalId",
-      "user_id": "$context.authorizer.user_id"
-    }
-  },
-  "body": $input.body
-}
-EOF
-  }
 }
