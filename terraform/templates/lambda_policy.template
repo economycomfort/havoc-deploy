@@ -8,6 +8,7 @@
                 "dynamodb:DeleteItem",
                 "dynamodb:GetItem",
                 "dynamodb:Query",
+                "dynamodb:Scan",
                 "dynamodb:UpdateItem"
             ],
             "Resource": [

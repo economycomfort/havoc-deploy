@@ -12,22 +12,22 @@ output "campaign_server_password" {
   value = "admin"
 }
 
-output "campaign_api_domain_name" {
-  value = "${var.campaign_prefix}-${var.campaign_name}-api.${var.domain_name}"
-}
-
-output "campaign_api_region" {
-  value = var.aws_region
-}
-
 output "campaign_admin_email" {
   value = var.campaign_admin_email
 }
+  
+output "api_domain_name" {
+  value = "${var.campaign_prefix}-${var.campaign_name}-api.${var.domain_name}"
+}
 
-output "campaign_admin_api_key" {
+output "api_region" {
+  value = var.aws_region
+}
+
+output "api_key" {
   value = random_string.api_key.id
 }
 
-output "campaign_admin_secret" {
+output "secret" {
   value = random_string.secret.id
 }
