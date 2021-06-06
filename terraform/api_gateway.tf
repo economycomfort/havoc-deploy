@@ -120,7 +120,7 @@ resource "aws_api_gateway_integration" "manage_lambda_integration" {
   resource_id             = aws_api_gateway_resource.manage_resource.id
   http_method             = aws_api_gateway_method.manage_post.http_method
   integration_http_method = "POST"
-  type                    = "AWS"
+  type                    = "AWS_PROXY"
   uri                     = aws_lambda_function.manage.invoke_arn
 }
 
@@ -129,7 +129,7 @@ resource "aws_api_gateway_integration" "remote_task_lambda_integration" {
   resource_id             = aws_api_gateway_resource.remote_task_resource.id
   http_method             = aws_api_gateway_method.remote_task_post.http_method
   integration_http_method = "POST"
-  type                    = "AWS"
+  type                    = "AWS_PROXY"
   uri                     = aws_lambda_function.remote_task.invoke_arn
 }
 
@@ -138,6 +138,6 @@ resource "aws_api_gateway_integration" "task_control_lambda_integration" {
   resource_id             = aws_api_gateway_resource.task_control_resource.id
   http_method             = aws_api_gateway_method.task_control_post.http_method
   integration_http_method = "POST"
-  type                    = "AWS"
+  type                    = "AWS_PROXY"
   uri                     = aws_lambda_function.task_control.invoke_arn
 }
