@@ -15,7 +15,7 @@ output "campaign_server_password" {
 output "campaign_admin_email" {
   value = var.campaign_admin_email
 }
-  
+
 output "api_domain_name" {
   value = "${var.campaign_prefix}-${var.campaign_name}-api.${var.domain_name}"
 }
