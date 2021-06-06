@@ -46,6 +46,15 @@ resource "aws_dynamodb_table_item" "nmap_task_type" {
   },
   "source_image": {
     "S": "public.ecr.aws/havoc_sh/nmap:latest"
+  },
+  "cpu": {
+    "N": 512
+  },
+  "memory": {
+    "N": 1024
+  },
+  "created_by": {
+    "S": var.campaign_admin_email
   }
 }
 ITEM
@@ -65,6 +74,15 @@ resource "aws_dynamodb_table_item" "metasploit_task_type" {
   },
   "source_image": {
     "S": "public.ecr.aws/havoc_sh/metasploit:latest"
+  },
+  "cpu": {
+    "N": 1024
+  },
+  "memory": {
+    "N": 4096
+  },
+  "created_by": {
+    "S": var.campaign_admin_email
   }
 }
 ITEM
