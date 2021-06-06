@@ -113,10 +113,10 @@ resource "aws_dynamodb_table" "authorizer" {
 resource "aws_dynamodb_table" "portgroups" {
   name           = "${var.campaign_prefix}-${var.campaign_name}-portgroups"
   billing_mode   = "PAY_PER_REQUEST"
-  hash_key       = "portgroup_id"
+  hash_key       = "portgroup_name"
 
   attribute {
-    name = "portgroup_id"
+    name = "portgroup_name"
     type = "S"
   }
 }
@@ -135,10 +135,10 @@ resource "aws_dynamodb_table" "task_types" {
 resource "aws_dynamodb_table" "tasks" {
   name           = "${var.campaign_prefix}-${var.campaign_name}-tasks"
   billing_mode   = "PAY_PER_REQUEST"
-  hash_key       = "task_id"
+  hash_key       = "task_name"
 
   attribute {
-  name = "task_id"
+  name = "task_name"
   type = "S"
   }
 }
@@ -146,11 +146,11 @@ resource "aws_dynamodb_table" "tasks" {
 resource "aws_dynamodb_table" "queue" {
   name           = "${var.campaign_prefix}-${var.campaign_name}-queue"
   billing_mode   = "PAY_PER_REQUEST"
-  hash_key       = "task_id"
+  hash_key       = "task_name"
   range_key      = "run_time"
 
   attribute {
-    name = "task_id"
+    name = "task_name"
     type = "S"
   }
 
