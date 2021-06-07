@@ -42,7 +42,7 @@ resource "aws_dynamodb_table_item" "nmap_task_type" {
     "S": "nmap"
   },
   "capabilities": {
-    "SS": ${jsonencode(["run_scan","get_scan_info","get_scan_results"])}
+    "SS": ${jsonencode(["run_scan","get_scan_info","get_scan_results","echo"])}
   },
   "source_image": {
     "S": "public.ecr.aws/havoc_sh/nmap:latest"
@@ -70,7 +70,7 @@ resource "aws_dynamodb_table_item" "metasploit_task_type" {
     "S": "metasploit"
   },
   "capabilities": {
-    "SS": ${jsonencode(["list_exploits","list_payloads","list_jobs","list_sessions","set_exploit_module","set_exploit_options","set_exploit_target","set_payload_module","set_payload_options","show_exploit","show_exploit_options","show_exploit_option_info","show_exploit_targets","show_exploit_evasion","show_exploit_payloads","show_configured_exploit_options","show_exploit_requirements","show_missing_exploit_requirements","show_last_exploit_results","show_payload","show_payload_options","show_payload_option_info","show_configured_payload_options","show_payload_requirements","show_missing_payload_requirements","show_job_info","show_session_info","execute_exploit","generate_payload","run_session_command","run_session_shell_command","session_tabs","load_session_plugin","session_import_psh","session_run_psh_cmd","run_session_script","get_session_writeable_dir","session_read","detach_session","kill_session","kill_job"])}
+    "SS": ${jsonencode(["list_exploits","list_payloads","list_jobs","list_sessions","set_exploit_module","set_exploit_options","set_exploit_target","set_payload_module","set_payload_options","show_exploit","show_exploit_options","show_exploit_option_info","show_exploit_targets","show_exploit_evasion","show_exploit_payloads","show_configured_exploit_options","show_exploit_requirements","show_missing_exploit_requirements","show_last_exploit_results","show_payload","show_payload_options","show_payload_option_info","show_configured_payload_options","show_payload_requirements","show_missing_payload_requirements","show_job_info","show_session_info","execute_exploit","generate_payload","run_session_command","run_session_shell_command","session_tabs","load_session_plugin","session_import_psh","session_run_psh_cmd","run_session_script","get_session_writeable_dir","session_read","detach_session","kill_session","kill_job","echo"])}
   },
   "source_image": {
     "S": "public.ecr.aws/havoc_sh/metasploit:latest"
