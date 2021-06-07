@@ -78,6 +78,11 @@
                 "logs:PutLogEvents"
             ],
             "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "iam:PassRole",
+            "Resource": "${task_exec_role}"
         }
     ]
 }
