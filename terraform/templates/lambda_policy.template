@@ -42,11 +42,7 @@
                 "ecs:StopTask",
                 "ecs:DescribeTasks"
             ],
-            "Resource": [
-                "arn:aws:ecs:*:478986894710:task-definition/nmap:*",
-                "arn:aws:ecs:*:478986894710:task-definition/metasploit:*",
-                "arn:aws:ecs:*:478986894710:task/*"
-            ]
+            "Resource": "*"
         },
         {
             "Effect": "Allow",
@@ -64,10 +60,7 @@
                 "ec2:CreateSecurityGroup",
                 "ec2:DeleteSecurityGroup"
             ],
-            "Resource": [
-                "arn:aws:ec2:*:478986894710:vpc/${vpc_id}",
-                "arn:aws:ec2:*:478986894710:security-group/*"
-            ]
+            "Resource": "*"
         },
         {
             "Effect": "Allow",
