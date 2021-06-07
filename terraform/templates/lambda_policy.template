@@ -82,7 +82,10 @@
         {
             "Effect": "Allow",
             "Action": "iam:PassRole",
-            "Resource": "${task_exec_role}"
+            "Resource": [
+                "${task_role}",
+                "${task_exec_role}"
+            ]
         }
     ]
 }
