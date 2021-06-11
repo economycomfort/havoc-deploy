@@ -160,7 +160,7 @@ resource "aws_dynamodb_table" "queue" {
   }
 
   ttl {
-  attribute_name = "run_time"
+  attribute_name = "expire_time"
   enabled        = true
   }
 }

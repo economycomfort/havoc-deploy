@@ -39,6 +39,11 @@ variable "campaign_admin_email" {
   default     = "<campaign_admin_email>"
 }
 
+variable "results_queue_expiration" {
+  description = "The number of days to keep task results in the queue"
+  default     = 30
+}
+
 variable "http_port" {
   description = "HTTP port used by the campaign server"
   default     = 80
