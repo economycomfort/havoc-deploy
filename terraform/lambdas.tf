@@ -89,6 +89,7 @@ resource "aws_lambda_function" "remote_task" {
   environment {
     variables = {
       CAMPAIGN_ID = "${var.campaign_prefix}-${var.campaign_name}"
+      RESULTS_QUEUE_EXPIRATION = var.results_queue_expiration
     }
   }
 }
