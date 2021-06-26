@@ -51,3 +51,15 @@ resource "aws_eip" "campaign_server_eip" {
   vpc        = true
   depends_on = [aws_internet_gateway.gw]
 }
+
+resource "aws_ebs_volume" "campaign_server_volume" {
+  availability_zone = aws_instance.campaign_server.availability_zone
+  type              = "gp2"
+  size              = 30
+}
+
+resource "aws_volume_attachment" "campaign_server_volume_attachment" {
+  device_name = "/dev/sdb"
+  instance_id = aws_instance.campaign_server.id
+  volume_id   = aws_ebs_volume.campaign_server_volume.id
+}
