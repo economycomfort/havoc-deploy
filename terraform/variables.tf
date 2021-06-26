@@ -5,6 +5,11 @@ variable "aws_region" {
   default     = "us-east-1"
 }
 
+variable "aws_profile" {
+  description = "The AWS profile to be used by Terraform"
+  default     = "default"
+}
+
 # Note that the campaign name will be used in the DNS hostname for your campaign server
 # and it will also be used in the name of several S3 buckets so it must be DNS compliant (https://datatracker.ietf.org/doc/html/rfc952)
 variable "campaign_prefix" {
