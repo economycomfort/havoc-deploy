@@ -59,7 +59,7 @@ resource "aws_ebs_volume" "campaign_server_volume" {
 }
 
 resource "aws_volume_attachment" "campaign_server_volume_attachment" {
-  device_name = "/dev/sdb"
+  device_name = "/dev/sdh"
   instance_id = aws_instance.campaign_server.id
   volume_id   = aws_ebs_volume.campaign_server_volume.id
 }
