@@ -8,7 +8,7 @@ runcmd:
   - sudo apt-get update
   - sudo apt-get -y install docker-ce docker-ce-cli containerd.io
   - 'fs_status=`sudo file -s /dev/nvme1n1`; if [ "$fs_status" = "/dev/nvme1n1: data" ]; then sudo mkfs -t xfs /dev/nvme1n1; sudo mkdir /data; sudo mount /dev/nvme1n1 /data; export new_fs=True; else export new_fs=False; fi'
-  - 'if [ "$new_fs" = "True" ]; then new_fs_uuid=`sudo lsblk -no UUID /dev/nvme1n1 | awk "END{print $1}"`; sudo su -c "echo UUID=$new_fs_uuid  /data  xfs  defaults,nofail  0  2 >> /etc/fstab"; sudo mkdir /data/elasticsearch; sudo mkdir /data/nginx/certs; fi'
+  - 'if [ "$new_fs" = "True" ]; then new_fs_uuid=`sudo lsblk -no UUID /dev/nvme1n1 | awk "END{print $1}"`; sudo su -c "echo UUID=$new_fs_uuid  /data  xfs  defaults,nofail  0  2 >> /etc/fstab"; sudo mkdir /data/elasticsearch; sudo mkdir /data/nginx; sudo mkdir /data/nginx/certs; fi'
   - sudo docker network create grafana-net
   - sudo docker volume create elasticsearch-storage --opt type=none --opt device=/data/elasticsearch --opt o=bind
   - sudo docker volume create cert-storage --opt type=none --opt device=/data/nginx/certs --opt o=bind
