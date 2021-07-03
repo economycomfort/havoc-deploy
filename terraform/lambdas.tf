@@ -34,6 +34,7 @@ resource "aws_lambda_function" "authorizer" {
 
   handler = "lambda_function.lambda_handler"
   runtime = "python3.8"
+  timeout = 30
 
   role = aws_iam_role.lambda_role.arn
 
@@ -54,6 +55,7 @@ resource "aws_lambda_function" "manage" {
 
   handler = "lambda_function.lambda_handler"
   runtime = "python3.8"
+  timeout = 30
 
   role = aws_iam_role.lambda_role.arn
 
@@ -83,6 +85,7 @@ resource "aws_lambda_function" "remote_task" {
 
   handler = "lambda_function.lambda_handler"
   runtime = "python3.8"
+  timeout = 30
 
   role = aws_iam_role.lambda_role.arn
 
@@ -142,6 +145,7 @@ resource "aws_lambda_function" "task_result" {
 
   handler = "lambda_function.lambda_handler"
   runtime = "python3.8"
+  timeout = 30
 
   role = aws_iam_role.lambda_role.arn
 
