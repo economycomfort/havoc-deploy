@@ -1,5 +1,9 @@
 # outputs.tf
 
+output "campaign_id" {
+  value = "${var.campaign_prefix}-${var.campaign_name}"
+}
+
 output "campaign_server" {
   value = "https://${var.campaign_prefix}-${var.campaign_name}.${data.aws_route53_zone.selected.name}"
 }
