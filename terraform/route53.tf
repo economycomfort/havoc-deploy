@@ -1,6 +1,7 @@
 # route53.tf
 
 resource "aws_route53_record" "campaign_server_record" {
+  count   = var.enable_domain_name ? 1 : 0
   zone_id = var.hosted_zone
   name    = "${var.campaign_prefix}-${var.campaign_name}.${data.aws_route53_zone.selected.name}"
   type    = "A"
@@ -9,6 +10,7 @@ resource "aws_route53_record" "campaign_server_record" {
 }
 
 resource "aws_route53_record" "campaign_api_cert_validation" {
+  count    = var.enable_domain_name ? 1 : 0
   for_each = {
     for dvo in aws_acm_certificate.api_gateway_cert.domain_validation_options : dvo.domain_name => {
       name    = dvo.resource_record_name
@@ -27,6 +29,7 @@ resource "aws_route53_record" "campaign_api_cert_validation" {
 }
 
 resource "aws_route53_record" "campaign_api_record" {
+  count   = var.enable_domain_name ? 1 : 0
   name    = "${var.campaign_prefix}-${var.campaign_name}-api.${var.domain_name}"
   type    = "A"
   zone_id = var.hosted_zone
@@ -37,4 +40,3 @@ resource "aws_route53_record" "campaign_api_record" {
     zone_id                = aws_api_gateway_domain_name.rest_api.regional_zone_id
   }
 }
-

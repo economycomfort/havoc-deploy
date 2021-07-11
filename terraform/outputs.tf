@@ -5,15 +5,15 @@ output "campaign_id" {
 }
 
 output "campaign_server" {
-  value = "https://${var.campaign_prefix}-${var.campaign_name}.${data.aws_route53_zone.selected.name}"
+  value = var.enable_domain_name ? "https://${var.campaign_prefix}-${var.campaign_name}.${var.domain_name}" : "A campaign server was not provisioned because a domain name was not provided"
 }
 
 output "campaign_server_username" {
-  value = "admin"
+  value = var.enable_domain_name ? "admin" : null
 }
 
 output "campaign_server_password" {
-  value = "admin"
+  value = var.enable_domain_name ? "admin" : null
 }
 
 output "campaign_admin_email" {
@@ -21,7 +21,7 @@ output "campaign_admin_email" {
 }
 
 output "api_domain_name" {
-  value = "${var.campaign_prefix}-${var.campaign_name}-api.${var.domain_name}"
+  value = var.enable_domain_name ? "${var.campaign_prefix}-${var.campaign_name}-api.${var.domain_name}" : "${aws_api_gateway_rest_api.rest_api.id}.execute-api.${var.aws_region}.amazonaws.com"
 }
 
 output "api_region" {

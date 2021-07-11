@@ -29,19 +29,23 @@ variable "keypair" {
   default     = "havoc_keypair"
 }
 
+variable "enable_domain_name" {
+  description = "If set to true, the havoc campaign API endpoint and havoc campaign server will be deployed with a friendly DNS name as defined by the hosted_zone and domain_name variables"
+  type        = bool
+}
+
 variable "hosted_zone" {
   description = "The ID of the hosted zone from which your campaign server and REST API will derive its DNS name"
-  default     = "<hosted_zone_id>"
+  default     = null
 }
 
 variable "domain_name" {
   description = "The domain name that will be assigned to your campaign server and REST API, i.e. example.com"
-  default     = "example.com"
+  default     = null
 }
 
 variable "campaign_admin_email" {
   description = "The email address that will be the username for the campaign admin. This email address will also receive email notifications related to the campaign server's let's encyrpt certificate"
-  default     = "<campaign_admin_email>"
 }
 
 variable "results_queue_expiration" {

@@ -16,23 +16,20 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
-data "aws_route53_zone" "selected" {
-  zone_id         = var.hosted_zone
-}
-
 data "template_file" "user_data" {
   template = file("templates/build_server.yaml")
 
   vars = {
-  region             = var.aws_region
-  campaign_id         = "${var.campaign_prefix}-${var.campaign_name}"
-  logstash_config    = var.logstash_config
-  letsencrypt_email  = var.campaign_admin_email
-  letsencrypt_host   = "${var.campaign_prefix}-${var.campaign_name}.${data.aws_route53_zone.selected.name}"
+  region            = var.aws_region
+  campaign_id       = "${var.campaign_prefix}-${var.campaign_name}"
+  logstash_config   = var.logstash_config
+  letsencrypt_email = var.campaign_admin_email
+  letsencrypt_host  = var.enable_domain_name ? "${var.campaign_prefix}-${var.campaign_name}.${var.domain_name}" : null
   }
 }
 
 resource "aws_instance" "campaign_server" {
+  count                  = var.enable_domain_name ? 1 : 0
   ami                    = data.aws_ami.ubuntu.id
   instance_type          = "t3.large"
   key_name               = var.keypair
@@ -47,18 +44,21 @@ resource "aws_instance" "campaign_server" {
 }
 
 resource "aws_eip" "campaign_server_eip" {
+  count      = var.enable_domain_name ? 1 : 0
   instance   = aws_instance.campaign_server.id
   vpc        = true
   depends_on = [aws_internet_gateway.gw]
 }
 
 resource "aws_ebs_volume" "campaign_server_volume" {
+  count             = var.enable_domain_name ? 1 : 0
   availability_zone = aws_instance.campaign_server.availability_zone
   type              = "gp2"
   size              = 30
 }
 
 resource "aws_volume_attachment" "campaign_server_volume_attachment" {
+  count       = var.enable_domain_name ? 1 : 0
   device_name = "/dev/sdh"
   instance_id = aws_instance.campaign_server.id
   volume_id   = aws_ebs_volume.campaign_server_volume.id
