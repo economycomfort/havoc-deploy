@@ -24,7 +24,7 @@ data "template_file" "user_data" {
   campaign_id       = "${var.campaign_prefix}-${var.campaign_name}"
   logstash_config   = var.logstash_config
   letsencrypt_email = var.campaign_admin_email
-  letsencrypt_host  = var.enable_domain_name ? "${var.campaign_prefix}-${var.campaign_name}.${var.domain_name}" : null
+  letsencrypt_host  = var.enable_domain_name ? "${var.campaign_prefix}-${var.campaign_name}.${var.domain_name}" : "None"
   }
 }
 
