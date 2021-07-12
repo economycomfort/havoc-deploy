@@ -10,7 +10,6 @@ resource "aws_route53_record" "campaign_server_record" {
 }
 
 resource "aws_route53_record" "campaign_api_cert_validation" {
-  count    = var.enable_domain_name ? 1 : 0
   for_each = {
     for dvo in aws_acm_certificate.api_gateway_cert.domain_validation_options : dvo.domain_name => {
       name    = dvo.resource_record_name
