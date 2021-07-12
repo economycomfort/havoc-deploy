@@ -45,7 +45,7 @@ resource "aws_api_gateway_base_path_mapping" "rest_api" {
   count       = var.enable_domain_name ? 1 : 0
   api_id      = aws_api_gateway_rest_api.rest_api.id
   stage_name  = aws_api_gateway_stage.primary_stage.stage_name
-  domain_name = aws_api_gateway_domain_name.rest_api.domain_name[count.index]
+  domain_name = aws_api_gateway_domain_name.rest_api[${count.index}].domain_name
 }
 
 resource "aws_api_gateway_authorizer" "authorizer" {
