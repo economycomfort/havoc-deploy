@@ -3,7 +3,7 @@
 resource "aws_route53_record" "campaign_server_record" {
   count   = var.enable_domain_name ? 1 : 0
   zone_id = var.hosted_zone
-  name    = "${var.campaign_prefix}-${var.campaign_name}.${data.aws_route53_zone.selected.name}"
+  name    = "${var.campaign_prefix}-${var.campaign_name}.${var.domain_name}"
   type    = "A"
   ttl     = "300"
   records = [aws_eip.campaign_server_eip[count.index].public_ip]
