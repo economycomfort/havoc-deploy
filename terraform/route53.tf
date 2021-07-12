@@ -10,21 +10,13 @@ resource "aws_route53_record" "campaign_server_record" {
 }
 
 resource "aws_route53_record" "campaign_api_cert_validation" {
-  for_each = {
-    for dvo in aws_acm_certificate.api_gateway_cert.domain_validation_options : dvo.domain_name => {
-      name    = dvo.resource_record_name
-      record  = dvo.resource_record_value
-      type    = dvo.resource_record_type
-      zone_id = var.hosted_zone
-    }
-  }
-
+  count           = var.enable_domain_name ? 1 : 0
   allow_overwrite = true
-  name            = each.value.name
-  records         = [each.value.record]
+  name            = aws_acm_certificate.api_gateway_cert.resource_record_name
+  records         = [aws_acm_certificate.api_gateway_cert.resource_record_value]
   ttl             = 60
-  type            = each.value.type
-  zone_id         = each.value.zone_id
+  type            = aws_acm_certificate.api_gateway_cert.resource_record_type
+  zone_id         = var.hosted_zone
 }
 
 resource "aws_route53_record" "campaign_api_record" {
