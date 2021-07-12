@@ -45,14 +45,14 @@ resource "aws_instance" "campaign_server" {
 
 resource "aws_eip" "campaign_server_eip" {
   count      = var.enable_domain_name ? 1 : 0
-  instance   = aws_instance.campaign_server.id
+  instance   = aws_instance.campaign_server.[count.index].id
   vpc        = true
   depends_on = [aws_internet_gateway.gw]
 }
 
 resource "aws_ebs_volume" "campaign_server_volume" {
   count             = var.enable_domain_name ? 1 : 0
-  availability_zone = aws_instance.campaign_server.availability_zone
+  availability_zone = aws_instance.campaign_server.[count.index].availability_zone
   type              = "gp2"
   size              = 30
 }
@@ -60,6 +60,6 @@ resource "aws_ebs_volume" "campaign_server_volume" {
 resource "aws_volume_attachment" "campaign_server_volume_attachment" {
   count       = var.enable_domain_name ? 1 : 0
   device_name = "/dev/sdh"
-  instance_id = aws_instance.campaign_server.id
-  volume_id   = aws_ebs_volume.campaign_server_volume.id
+  instance_id = aws_instance.campaign_server.[count.index].id
+  volume_id   = aws_ebs_volume.campaign_server_volume.[count.index].id
 }
