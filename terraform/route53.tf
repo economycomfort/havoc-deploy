@@ -12,10 +12,10 @@ resource "aws_route53_record" "campaign_server_record" {
 resource "aws_route53_record" "campaign_api_cert_validation" {
   count           = var.enable_domain_name ? 1 : 0
   allow_overwrite = true
-  name            = aws_acm_certificate.api_gateway_cert[count.index].resource_record_name
-  records         = [aws_acm_certificate.api_gateway_cert[count.index].resource_record_value]
+  name            = aws_acm_certificate.api_gateway_cert[count.index].domain_validation_options[0].resource_record_name
+  records         = [aws_acm_certificate.api_gateway_cert[count.index].domain_validation_options[0]resource_record_value]
   ttl             = 60
-  type            = aws_acm_certificate.api_gateway_cert[count.index].resource_record_type
+  type            = aws_acm_certificate.api_gateway_cert[count.index].domain_validation_options[0]resource_record_type
   zone_id         = var.hosted_zone
 }
 
