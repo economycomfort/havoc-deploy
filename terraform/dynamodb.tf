@@ -43,7 +43,7 @@ resource "aws_dynamodb_table_item" "nmap_task_type" {
     "S": "nmap"
   },
   "capabilities": {
-    "SS": ${jsonencode(["run_scan","get_scan_info","get_scan_results","echo", "terminate"])}
+    "SS": ${jsonencode(["run_scan","get_scan_info","get_scan_results","echo","sync_from_workspace","sync_to_workspace","upload_to_workspace","download_from_workspace","terminate"])}
   },
   "source_image": {
     "S": "public.ecr.aws/havoc_sh/nmap:latest"
@@ -71,10 +71,38 @@ resource "aws_dynamodb_table_item" "metasploit_task_type" {
     "S": "metasploit"
   },
   "capabilities": {
-    "SS": ${jsonencode(["list_exploits","list_payloads","list_jobs","list_sessions","set_exploit_module","set_exploit_options","set_exploit_target","set_payload_module","set_payload_options","show_exploit","show_exploit_options","show_exploit_option_info","show_exploit_targets","show_exploit_evasion","show_exploit_payloads","show_configured_exploit_options","show_exploit_requirements","show_missing_exploit_requirements","show_last_exploit_results","show_payload","show_payload_options","show_payload_option_info","show_configured_payload_options","show_payload_requirements","show_missing_payload_requirements","show_job_info","show_session_info","execute_exploit","generate_payload","run_session_command","run_session_shell_command","session_tabs","load_session_plugin","session_import_psh","session_run_psh_cmd","run_session_script","get_session_writeable_dir","session_read","detach_session","kill_session","kill_job","echo","terminate"])}
+    "SS": ${jsonencode(["list_exploits","list_payloads","list_jobs","list_sessions","set_exploit_module","set_exploit_options","set_exploit_target","set_payload_module","set_payload_options","show_exploit","show_exploit_options","show_exploit_option_info","show_exploit_targets","show_exploit_evasion","show_exploit_payloads","show_configured_exploit_options","show_exploit_requirements","show_missing_exploit_requirements","show_last_exploit_results","show_payload","show_payload_options","show_payload_option_info","show_configured_payload_options","show_payload_requirements","show_missing_payload_requirements","show_job_info","show_session_info","execute_exploit","generate_payload","run_session_command","run_session_shell_command","session_tabs","load_session_plugin","session_import_psh","session_run_psh_cmd","run_session_script","get_session_writeable_dir","session_read","detach_session","kill_session","kill_job","echo","sync_from_workspace","sync_to_workspace","upload_to_workspace","download_from_workspace","terminate"])}
   },
   "source_image": {
     "S": "public.ecr.aws/havoc_sh/metasploit:latest"
+  },
+  "cpu": {
+    "N": "1024"
+  },
+  "memory": {
+    "N": "4096"
+  },
+  "created_by": {
+    "S": "${var.campaign_admin_email}"
+  }
+}
+ITEM
+}
+
+resource "aws_dynamodb_table_item" "powershell_empire_task_type" {
+  table_name = aws_dynamodb_table.task_types.name
+  hash_key   = aws_dynamodb_table.task_types.hash_key
+
+  item = <<ITEM
+{
+  "task_type": {
+    "S": "powershell_empire"
+  },
+  "capabilities": {
+    "SS": ${jsonencode(["get_listeners","get_listener_options","create_listener","kill_listener","kill_all_listeners","get_stagers","create_stager","get_agents","get_stale_agents","remove_agent","remove_stale_agents","agent_shell_command","clear_queued_shell_commands","rename_agent","kill_agent","kill_all_agents","get_modules","search_modules","execute_module","get_stored_credentials","get_logged_events","echo","sync_from_workspace","sync_to_workspace","upload_to_workspace","download_from_workspace","terminate"])}
+  },
+  "source_image": {
+    "S": "public.ecr.aws/havoc_sh/powershell_empire:latest"
   },
   "cpu": {
     "N": "1024"
