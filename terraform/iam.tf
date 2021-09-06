@@ -1,51 +1,5 @@
 # iam.tf
 
-data "template_file" "campaign_server_policy" {
-  template = file("templates/campaign_server_policy.template")
-
-  vars = {
-  campaign_id = "${var.campaign_prefix}-${var.campaign_name}"
-  }
-}
-
-resource "aws_iam_instance_profile" "campaign_server_profile" {
-  name = "${var.campaign_prefix}-${var.campaign_name}-campaign-server-profile"
-  role = aws_iam_role.campaign_server_role.name
-}
-
-resource "aws_iam_role" "campaign_server_role" {
-  name = "${var.campaign_prefix}-${var.campaign_name}-campaign-server-role"
-  path = "/"
-
-  assume_role_policy = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Action": "sts:AssumeRole",
-            "Principal": {
-              "Service": "ec2.amazonaws.com"
-            },
-            "Effect": "Allow",
-            "Sid": ""
-        }
-    ]
-}
-EOF
-}
-
-resource "aws_iam_policy" "campaign-server-policy" {
-  name        = "${var.campaign_prefix}-${var.campaign_name}-campaign-server-policy"
-  path        = "/"
-  description = "EC2 policy for Havoc campaign server"
-  policy = data.template_file.campaign_server_policy.rendered
-}
-
-resource "aws_iam_role_policy_attachment" "campaign_server_policy_attachment" {
-    role = aws_iam_role.campaign_server_role.name
-    policy_arn = aws_iam_policy.campaign-server-policy.arn
-}
-
 data "template_file" "lambda_policy" {
   template = file("templates/lambda_policy.template")
 

@@ -4,18 +4,6 @@ output "campaign_id" {
   value = "${var.campaign_prefix}-${var.campaign_name}"
 }
 
-output "campaign_server" {
-  value = var.enable_domain_name ? "https://${var.campaign_prefix}-${var.campaign_name}.${var.domain_name}" : "A campaign server was not provisioned because a domain name was not provided"
-}
-
-output "campaign_server_username" {
-  value = var.enable_domain_name ? "admin" : null
-}
-
-output "campaign_server_password" {
-  value = var.enable_domain_name ? "admin" : null
-}
-
 output "campaign_admin_email" {
   value = var.campaign_admin_email
 }
