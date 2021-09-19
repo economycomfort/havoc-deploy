@@ -41,13 +41,16 @@ resource "aws_dynamodb_table_item" "domain_name" {
   item = <<ITEM
 {
   "domain_name": {
-    "S": "${var.domain_name}"
+    "S": var.domain_name
+  },
+  "hosted_zone_id": {
+    "S": var.hosted_zone
   },
   "api_domain": {
     "S": "yes"
   },
   "created_by": {
-    "S": "${var.campaign_admin_email}"
+    "S": var.campaign_admin_email
   }
 }
 ITEM
