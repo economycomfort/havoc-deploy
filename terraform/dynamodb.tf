@@ -43,13 +43,16 @@ resource "aws_dynamodb_table_item" "domain_name" {
   "domain_name": {
     "S": var.domain_name
   },
-  "hosted_zone_id": {
+  "hosted_zone": {
     "S": var.hosted_zone
   },
   "api_domain": {
     "S": "yes"
   },
-  "created_by": {
+  "tasks": {
+    "SS": ['None']
+  },
+  "user_id": {
     "S": var.campaign_admin_email
   }
 }
