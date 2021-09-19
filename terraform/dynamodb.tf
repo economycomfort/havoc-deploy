@@ -33,6 +33,26 @@ resource "aws_dynamodb_table_item" "campaign_admin" {
 ITEM
 }
 
+resource "aws_dynamodb_table_item" "domain_name" {
+  count      = var.enable_domain_name ? 1 : 0
+  table_name = aws_dynamodb_table.domains.name
+  hash_key   = aws_dynamodb_table.domains.hash_key
+
+  item = <<ITEM
+{
+  "domain_name": {
+    "S": "${var.domain_name}"
+  },
+  "api_domain": {
+    "S": "yes"
+  },
+  "created_by": {
+    "S": "${var.campaign_admin_email}"
+  }
+}
+ITEM
+}
+
 resource "aws_dynamodb_table_item" "nmap_task_type" {
   table_name = aws_dynamodb_table.task_types.name
   hash_key   = aws_dynamodb_table.task_types.hash_key
@@ -136,6 +156,17 @@ resource "aws_dynamodb_table" "authorizer" {
     name               = "${var.campaign_prefix}-${var.campaign_name}-ApiKeyIndex"
     hash_key           = "api_key"
     projection_type    = "ALL"
+  }
+}
+
+resource "aws_dynamodb_table" "domains" {
+  name           = "${var.campaign_prefix}-${var.campaign_name}-domains"
+  billing_mode   = "PAY_PER_REQUEST"
+  hash_key       = "domain_name"
+
+  attribute {
+    name = "domain_name"
+    type = "S"
   }
 }
 
