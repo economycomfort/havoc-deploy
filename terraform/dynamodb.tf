@@ -52,6 +52,9 @@ resource "aws_dynamodb_table_item" "domain_name" {
   "tasks": {
     "SS": ['None']
   },
+  "host_names": {
+    "SS": ["${var.campaign_prefix}-${var.campaign_name}-api"]
+  },
   "user_id": {
     "S": var.campaign_admin_email
   }
