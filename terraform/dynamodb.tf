@@ -156,7 +156,7 @@ resource "aws_dynamodb_table_item" "http_server_task_type" {
     "S": "http_server"
   },
   "capabilities": {
-    "SS": ${jsonencode(["start_server","cert_gen","echo","sync_from_workspace","sync_to_workspace","upload_to_workspace","download_from_workspace","terminate"])}
+    "SS": ${jsonencode(["start_server","stop_server","cert_gen","echo","sync_from_workspace","sync_to_workspace","upload_to_workspace","download_from_workspace","terminate"])}
   },
   "source_image": {
     "S": "public.ecr.aws/havoc_sh/http_server:latest"
