@@ -146,6 +146,34 @@ resource "aws_dynamodb_table_item" "powershell_empire_task_type" {
 ITEM
 }
 
+resource "aws_dynamodb_table_item" "http_server_task_type" {
+  table_name = aws_dynamodb_table.task_types.name
+  hash_key   = aws_dynamodb_table.task_types.hash_key
+
+  item = <<ITEM
+{
+  "task_type": {
+    "S": "http_server"
+  },
+  "capabilities": {
+    "SS": ${jsonencode(["start_server","cert_gen","echo","sync_from_workspace","sync_to_workspace","upload_to_workspace","download_from_workspace","terminate"])}
+  },
+  "source_image": {
+    "S": "public.ecr.aws/havoc_sh/http_server:latest"
+  },
+  "cpu": {
+    "N": "512"
+  },
+  "memory": {
+    "N": "1024"
+  },
+  "created_by": {
+    "S": "${var.campaign_admin_email}"
+  }
+}
+ITEM
+}
+
 resource "aws_dynamodb_table" "authorizer" {
   name           = "${var.campaign_prefix}-${var.campaign_name}-authorizer"
   billing_mode   = "PAY_PER_REQUEST"

@@ -75,3 +75,27 @@ resource "aws_ecs_task_definition" "powershell_empire" {
     name        = "powershell_empire"
   }
 }
+
+data "template_file" "http_server_task_definition" {
+  template = file("templates/http_server_task_definition.template")
+
+  vars = {
+  campaign_id = "${var.campaign_prefix}-${var.campaign_name}"
+  aws_region = var.aws_region
+  }
+}
+
+resource "aws_ecs_task_definition" "http_server" {
+  family                = "http_server"
+  execution_role_arn    = aws_iam_role.ecs_task_execution_role.arn
+  task_role_arn         = aws_iam_role.ecs_task_role.arn
+  network_mode          = "awsvpc"
+  container_definitions = data.template_file.http_server_task_definition.rendered
+  requires_compatibilities = ["FARGATE"]
+  cpu                      = 512
+  memory                   = 1024
+  tags                     = {
+    campaign_id = "${var.campaign_prefix}-${var.campaign_name}"
+    name        = "http_server"
+  }
+}
