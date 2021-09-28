@@ -8,6 +8,7 @@ data "template_file" "lambda_policy" {
   authorizer_index = "${aws_dynamodb_table.authorizer.arn}/index/${var.campaign_prefix}-${var.campaign_name}-ApiKeyIndex"
   portgroups_table = aws_dynamodb_table.portgroups.arn,
   task_types_table = aws_dynamodb_table.task_types.arn,
+  domains_table    = aws_dynamodb_table.domains.arn,
   tasks_table      = aws_dynamodb_table.tasks.arn,
   queue_table      = aws_dynamodb_table.queue.arn,
   workspace_bucket = "${var.campaign_prefix}-${var.campaign_name}-workspace",
