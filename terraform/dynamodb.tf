@@ -50,7 +50,7 @@ resource "aws_dynamodb_table_item" "domain_name" {
     "S": "yes"
   },
   "tasks": {
-    "SS": ['None']
+    "SS": ${jsonencode(["None"])}
   },
   "host_names": {
     "SS": ["${var.campaign_prefix}-${var.campaign_name}-api"]
