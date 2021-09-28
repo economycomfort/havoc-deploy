@@ -41,10 +41,10 @@ resource "aws_dynamodb_table_item" "domain_name" {
   item = <<ITEM
 {
   "domain_name": {
-    "S": var.domain_name
+    "S": "${var.domain_name}"
   },
   "hosted_zone": {
-    "S": var.hosted_zone
+    "S": "${var.hosted_zone}"
   },
   "api_domain": {
     "S": "yes"
@@ -56,7 +56,7 @@ resource "aws_dynamodb_table_item" "domain_name" {
     "SS": ["${var.campaign_prefix}-${var.campaign_name}-api"]
   },
   "user_id": {
-    "S": var.campaign_admin_email
+    "S": "${var.campaign_admin_email}"
   }
 }
 ITEM
