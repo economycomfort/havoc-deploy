@@ -174,6 +174,34 @@ resource "aws_dynamodb_table_item" "http_server_task_type" {
 ITEM
 }
 
+resource "aws_dynamodb_table_item" "trainman_task_type" {
+  table_name = aws_dynamodb_table.task_types.name
+  hash_key   = aws_dynamodb_table.task_types.hash_key
+
+  item = <<ITEM
+{
+  "task_type": {
+    "S": "trainman"
+  },
+  "capabilities": {
+    "SS": ${jsonencode(["execute_process","kill_process","echo","sync_from_workspace","sync_to_workspace","upload_to_workspace","download_from_workspace","ls","del","terminate"])}
+  },
+  "source_image": {
+    "S": "public.ecr.aws/havoc_sh/trainman:latest"
+  },
+  "cpu": {
+    "N": "1024"
+  },
+  "memory": {
+    "N": "4096"
+  },
+  "created_by": {
+    "S": "${var.campaign_admin_email}"
+  }
+}
+ITEM
+}
+
 resource "aws_dynamodb_table" "authorizer" {
   name           = "${var.campaign_prefix}-${var.campaign_name}-authorizer"
   billing_mode   = "PAY_PER_REQUEST"

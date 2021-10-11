@@ -99,3 +99,27 @@ resource "aws_ecs_task_definition" "http_server" {
     name        = "http_server"
   }
 }
+
+data "template_file" "tainman_task_definition" {
+  template = file("templates/trainman_task_definition.template")
+
+  vars = {
+  campaign_id = "${var.campaign_prefix}-${var.campaign_name}"
+  aws_region = var.aws_region
+  }
+}
+
+resource "aws_ecs_task_definition" "trainman" {
+  family                = "trainman"
+  execution_role_arn    = aws_iam_role.ecs_task_execution_role.arn
+  task_role_arn         = aws_iam_role.ecs_task_role.arn
+  network_mode          = "awsvpc"
+  container_definitions = data.template_file.trainman_task_definition.rendered
+  requires_compatibilities = ["FARGATE"]
+  cpu                      = 1024
+  memory                   = 4096
+  tags                     = {
+    campaign_id = "${var.campaign_prefix}-${var.campaign_name}"
+    name        = "trainman"
+  }
+}
