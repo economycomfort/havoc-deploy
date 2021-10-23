@@ -100,7 +100,7 @@ resource "aws_ecs_task_definition" "http_server" {
   }
 }
 
-data "template_file" "tainman_task_definition" {
+data "template_file" "trainman_task_definition" {
   template = file("templates/trainman_task_definition.template")
 
   vars = {
