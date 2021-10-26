@@ -1,34 +1,34 @@
 # lambdas.tf
 
 data "aws_s3_bucket_object" "authorizer_hash" {
-  bucket = "havoc-control-api"
+  bucket = "havoc-control-api-${var.aws_region}"
   key    = "authorizer.zip.base64sha256"
 }
 
 data "aws_s3_bucket_object" "manage_hash" {
-  bucket = "havoc-control-api"
+  bucket = "havoc-control-api-${var.aws_region}"
   key    = "manage.zip.base64sha256"
 }
 
 data "aws_s3_bucket_object" "remote_task_hash" {
-  bucket = "havoc-control-api"
+  bucket = "havoc-control-api-${var.aws_region}"
   key    = "remote_task.zip.base64sha256"
 }
 
 data "aws_s3_bucket_object" "task_control_hash" {
-  bucket = "havoc-control-api"
+  bucket = "havoc-control-api-${var.aws_region}"
   key    = "task_control.zip.base64sha256"
 }
 
 data "aws_s3_bucket_object" "task_result_hash" {
-  bucket = "havoc-control-api"
+  bucket = "havoc-control-api-${var.aws_region}"
   key    = "task_result.zip.base64sha256"
 }
 
 resource "aws_lambda_function" "authorizer" {
   function_name = "${var.campaign_prefix}-${var.campaign_name}-authorizer"
 
-  s3_bucket = "havoc-control-api"
+  s3_bucket = "havoc-control-api-${var.aws_region}"
   s3_key    = "authorizer.zip"
   source_code_hash = data.aws_s3_bucket_object.authorizer_hash.body
 
@@ -49,7 +49,7 @@ resource "aws_lambda_function" "authorizer" {
 resource "aws_lambda_function" "manage" {
   function_name = "${var.campaign_prefix}-${var.campaign_name}-manage"
 
-  s3_bucket = "havoc-control-api"
+  s3_bucket = "havoc-control-api-${var.aws_region}"
   s3_key    = "manage.zip"
   source_code_hash = data.aws_s3_bucket_object.manage_hash.body
 
@@ -79,7 +79,7 @@ resource "aws_lambda_permission" "apigw_manage_lambda" {
 resource "aws_lambda_function" "remote_task" {
   function_name = "${var.campaign_prefix}-${var.campaign_name}-remote-task"
 
-  s3_bucket = "havoc-control-api"
+  s3_bucket = "havoc-control-api-${var.aws_region}"
   s3_key    = "remote_task.zip"
   source_code_hash = data.aws_s3_bucket_object.remote_task_hash.body
 
@@ -109,7 +109,7 @@ resource "aws_lambda_permission" "apigw_remote_task_lambda" {
 resource "aws_lambda_function" "task_control" {
   function_name = "${var.campaign_prefix}-${var.campaign_name}-task-control"
 
-  s3_bucket = "havoc-control-api"
+  s3_bucket = "havoc-control-api-${var.aws_region}"
   s3_key    = "task_control.zip"
   source_code_hash = data.aws_s3_bucket_object.task_control_hash.body
 
@@ -139,7 +139,7 @@ resource "aws_lambda_permission" "apigw_task_control_lambda" {
 resource "aws_lambda_function" "task_result" {
   function_name = "${var.campaign_prefix}-${var.campaign_name}-task-result"
 
-  s3_bucket = "havoc-control-api"
+  s3_bucket = "havoc-control-api-${var.aws_region}"
   s3_key    = "task_result.zip"
   source_code_hash = data.aws_s3_bucket_object.task_result_hash.body
 
