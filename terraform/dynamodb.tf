@@ -128,7 +128,7 @@ resource "aws_dynamodb_table_item" "powershell_empire_task_type" {
     "S": "powershell_empire"
   },
   "capabilities": {
-    "SS": ${jsonencode(["get_listeners","get_listener_options","create_listener","kill_listener","kill_all_listeners","get_stagers","create_stager","get_agents","get_stale_agents","remove_agent","remove_stale_agents","agent_shell_command","clear_queued_shell_commands","rename_agent","kill_agent","kill_all_agents","get_modules","search_modules","execute_module","get_stored_credentials","get_logged_events","cert_gen","echo","sync_from_workspace","sync_to_workspace","upload_to_workspace","download_from_workspace","ls","del","terminate"])}
+    "SS": ${jsonencode(["get_listeners","get_listener_options","create_listener","kill_listener","kill_all_listeners","get_stagers","create_stager","get_agents","get_stale_agents","remove_agent","remove_stale_agents","agent_shell_command","get_shell_command_results","delete_shell_command_results","clear_queued_shell_commands","rename_agent","kill_agent","kill_all_agents","get_modules","search_modules","execute_module","get_stored_credentials","get_logged_events","cert_gen","echo","sync_from_workspace","sync_to_workspace","upload_to_workspace","download_from_workspace","ls","del","terminate"])}
   },
   "source_image": {
     "S": "public.ecr.aws/havoc_sh/powershell_empire:latest"
