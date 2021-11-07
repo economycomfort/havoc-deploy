@@ -184,7 +184,7 @@ resource "aws_dynamodb_table_item" "trainman_task_type" {
     "S": "trainman"
   },
   "capabilities": {
-    "SS": ${jsonencode(["execute_process","get_process_output","kill_process","echo","sync_from_workspace","sync_to_workspace","upload_to_workspace","download_from_workspace","ls","del","terminate"])}
+    "SS": ${jsonencode(["execute_process","get_process_output","kill_process","run_ad_dc","kill_ad_dc","echo","sync_from_workspace","sync_to_workspace","upload_to_workspace","download_from_workspace","ls","del","terminate"])}
   },
   "source_image": {
     "S": "public.ecr.aws/havoc_sh/trainman:latest"
