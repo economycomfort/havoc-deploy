@@ -33,7 +33,7 @@ resource "aws_api_gateway_stage" "primary_stage" {
 
 resource "aws_api_gateway_domain_name" "rest_api" {
   count                    = var.enable_domain_name ? 1 : 0
-  domain_name              = "${var.campaign_prefix}-${var.campaign_name}-api.${var.domain_name}"
+  domain_name              = "${var.campaign_name}-api.${var.domain_name}"
   regional_certificate_arn = aws_acm_certificate_validation.api_gateway_cert[count.index].certificate_arn
 
   endpoint_configuration {

@@ -12,7 +12,7 @@ resource "aws_route53_record" "campaign_api_cert_validation" {
 
 resource "aws_route53_record" "campaign_api_record" {
   count   = var.enable_domain_name ? 1 : 0
-  name    = "${var.campaign_prefix}-${var.campaign_name}-api.${var.domain_name}"
+  name    = "${var.campaign_name}-api.${var.domain_name}"
   type    = "A"
   zone_id = var.hosted_zone
 

@@ -12,7 +12,6 @@ data "template_file" "lambda_policy" {
   tasks_table      = aws_dynamodb_table.tasks.arn,
   queue_table      = aws_dynamodb_table.queue.arn,
   workspace_bucket = "${var.campaign_prefix}-${var.campaign_name}-workspace",
-  logging_bucket   = "${var.campaign_prefix}-${var.campaign_name}-logging",
   task_role        = aws_iam_role.ecs_task_role.arn
   task_exec_role   = aws_iam_role.ecs_task_execution_role.arn
   }

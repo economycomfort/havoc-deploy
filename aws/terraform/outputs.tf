@@ -9,7 +9,7 @@ output "CAMPAIGN_ADMIN_EMAIL" {
 }
 
 output "API_DOMAIN_NAME" {
-  value = var.enable_domain_name ? "${var.campaign_prefix}-${var.campaign_name}-api.${var.domain_name}" : "${aws_api_gateway_rest_api.rest_api.id}.execute-api.${var.aws_region}.amazonaws.com"
+  value = var.enable_domain_name ? "${var.campaign_name}-api.${var.domain_name}" : "${aws_api_gateway_rest_api.rest_api.id}.execute-api.${var.aws_region}.amazonaws.com"
 }
 
 output "API_REGION" {
