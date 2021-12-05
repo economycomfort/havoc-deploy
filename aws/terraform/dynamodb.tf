@@ -8,7 +8,7 @@ resource "random_string" "api_key" {
 resource "random_string" "secret" {
   length  = 24
   special = true
-  override_special = "~@#%^&*_-+=,.<>;:"
+  override_special = "~@#^&*_-+=,.<>;:"
 }
 
 resource "aws_dynamodb_table_item" "campaign_admin" {
