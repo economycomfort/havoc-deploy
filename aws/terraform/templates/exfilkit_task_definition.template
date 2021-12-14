@@ -1,7 +1,7 @@
 [
     {
-        "name": "${campaign_id}-trainman",
-        "image": "public.ecr.aws/havoc_sh/trainman:latest",
+        "name": "${campaign_id}-exfilkit",
+        "image": "public.ecr.aws/havoc_sh/exfilkit:latest",
         "essential": true,
         "entryPoint": [
             "/bin/bash", "-c"
@@ -14,7 +14,7 @@
             "options": {
                 "awslogs-group": "${campaign_id}/ecs",
                 "awslogs-region": "${aws_region}",
-                "awslogs-stream-prefix": "trainman"
+                "awslogs-stream-prefix": "exfilkit"
             }
         }
     }

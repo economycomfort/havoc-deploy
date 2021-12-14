@@ -123,3 +123,27 @@ resource "aws_ecs_task_definition" "trainman" {
     name        = "trainman"
   }
 }
+
+data "template_file" "exfilkit_task_definition" {
+  template = file("templates/exfilkit_task_definition.template")
+
+  vars = {
+  campaign_id = "${var.campaign_prefix}-${var.campaign_name}"
+  aws_region = var.aws_region
+  }
+}
+
+resource "aws_ecs_task_definition" "exfilkit" {
+  family                = "exfilkit"
+  execution_role_arn    = aws_iam_role.ecs_task_execution_role.arn
+  task_role_arn         = aws_iam_role.ecs_task_role.arn
+  network_mode          = "awsvpc"
+  container_definitions = data.template_file.exfilkit_task_definition.rendered
+  requires_compatibilities = ["FARGATE"]
+  cpu                      = 1024
+  memory                   = 4096
+  tags                     = {
+    campaign_id = "${var.campaign_prefix}-${var.campaign_name}"
+    name        = "exfilkit"
+  }
+}

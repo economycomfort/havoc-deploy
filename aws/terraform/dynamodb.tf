@@ -184,10 +184,38 @@ resource "aws_dynamodb_table_item" "trainman_task_type" {
     "S": "trainman"
   },
   "capabilities": {
-    "SS": ${jsonencode(["execute_process","get_process_output","kill_process","run_ad_dc","kill_ad_dc","echo","sync_from_workspace","sync_to_workspace","upload_to_workspace","download_from_workspace","ls","del","terminate"])}
+    "SS": ${jsonencode(["execute_process","get_process_output","kill_process","run_ad_dc","kill_ad_dc","start_cve_2021_44228_app","stop_cve_2021_44228_app","exploit_cve_2021_44228","echo","sync_from_workspace","sync_to_workspace","upload_to_workspace","download_from_workspace","ls","del","terminate"])}
   },
   "source_image": {
     "S": "public.ecr.aws/havoc_sh/trainman:latest"
+  },
+  "cpu": {
+    "N": "1024"
+  },
+  "memory": {
+    "N": "4096"
+  },
+  "created_by": {
+    "S": "${var.campaign_admin_email}"
+  }
+}
+ITEM
+}
+
+resource "aws_dynamodb_table_item" "exfilkit_task_type" {
+  table_name = aws_dynamodb_table.task_types.name
+  hash_key   = aws_dynamodb_table.task_types.hash_key
+
+  item = <<ITEM
+{
+  "task_type": {
+    "S": "exfilkit"
+  },
+  "capabilities": {
+    "SS": ${jsonencode(["start_dns_exfil_server","stop_dns_exfil_server","start_http_get_exfil_server","stop_http_get_exfil_server","start_http_post_exfil_server","stop_http_post_exfil_server","echo","sync_from_workspace","sync_to_workspace","upload_to_workspace","download_from_workspace","ls","del","terminate"])}
+  },
+  "source_image": {
+    "S": "public.ecr.aws/havoc_sh/exfilkit:latest"
   },
   "cpu": {
     "N": "1024"
