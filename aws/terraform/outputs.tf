@@ -17,9 +17,9 @@ output "API_REGION" {
 }
 
 output "API_KEY" {
-  value = "${random_string.api_key.id}"
+  value = random_string.api_key.id
 }
 
 output "SECRET" {
-  value = "${random_string.secret.id}"
+  value = random_string.secret.id
 }
