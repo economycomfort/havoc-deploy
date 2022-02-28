@@ -2,9 +2,13 @@
 
 resource "aws_s3_bucket" "workspace" {
   bucket = "${var.campaign_prefix}-${var.campaign_name}-workspace"
-  acl    = "private"
 
   tags = {
     Name        = "${var.campaign_prefix}-${var.campaign_name}-workspace"
   }
+}
+
+resource "aws_s3_bucket_acl" "workspace" {
+  bucket = aws_s3_bucket.workspace.id
+  acl    = "private"
 }
